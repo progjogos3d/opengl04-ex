@@ -21,7 +21,7 @@ public class VectorUtil {
     }
 
     public static Vector3f mul(Vector3fc v, float s) {
-        return new Vector3f(s).mul(s);
+        return new Vector3f(v).mul(s);
     }
 
     public static Vector3f mul(Vector3fc a, Vector3fc b) {

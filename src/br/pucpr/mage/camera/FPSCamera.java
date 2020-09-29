@@ -8,7 +8,7 @@ public class FPSCamera extends Camera {
     private float angleY = 0;
 
     public Vector3f getDirection() {
-        return new Vector3f(0, 0, 1).rotateY(angleY);
+        return new Vector3f(0, 0, -1).rotateY(angleY);
     }
 
     @Override
@@ -24,10 +24,6 @@ public class FPSCamera extends Camera {
     public FPSCamera turn(float angle, float speed) {
         this.angleY += angle * speed;
         return this;
-    }
-
-    public FPSCamera move(float speed, float time, boolean strafe) {
-        return strafe ? strafe(speed, time) : move(speed, time);
     }
 
     public FPSCamera move(float speed, float time) {
