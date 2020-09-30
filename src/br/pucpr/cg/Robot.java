@@ -46,7 +46,7 @@ public class Robot {
         private int key1, key2;
 
         private Vector3f translation;
-        private float rotation = toRadians(270f);
+        private float rotation = toRadians(290f);
         private Vector3f scale;
         private Vector3f pivot;
 
@@ -82,7 +82,6 @@ public class Robot {
             var world = mul(parent, transform);
             mesh.setUniform("uWorld", scale(world, scale))
                 .draw(shader);
-
 
             if (next != null) next.draw(world, shader);
         }
