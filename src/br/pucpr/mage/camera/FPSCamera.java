@@ -2,7 +2,7 @@ package br.pucpr.mage.camera;
 
 import org.joml.Vector3f;
 
-import static br.pucpr.mage.VectorUtil.*;
+import static br.pucpr.mage.MathUtil.*;
 
 public class FPSCamera extends Camera {
     private float angleY = 0;

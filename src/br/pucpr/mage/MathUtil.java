@@ -1,9 +1,56 @@
 package br.pucpr.mage;
 
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
+import org.joml.*;
 
-public class VectorUtil {
+public class MathUtil {
+    public static Matrix4f invert(Matrix4fc m) {
+        return new Matrix4f(m).invert();
+    }
+
+    public static Matrix4f transpose(Matrix4fc m) {
+        return new Matrix4f(m).transpose();
+    }
+
+    public static Matrix4f mul(Matrix4f l, Matrix4f r) {
+        return new Matrix4f(l).mul(r);
+    }
+
+    public static Matrix4f scale(Matrix4fc m, float scale) {
+        return new Matrix4f(m).scale(scale);
+    }
+
+    public static Matrix4f scale(Matrix4fc m, Vector3fc scale) {
+        return new Matrix4f(m).scale(scale);
+    }
+
+    public static Matrix4f translate(Matrix4fc m, Vector3fc offset) {
+        return new Matrix4f(m).translate(offset);
+    }
+
+    public static Matrix4f translate(Matrix4fc m, float x, float y, float z) {
+        return new Matrix4f(m).translate(x, y, z);
+    }
+
+    public static Vector4fc transform(Matrix4fc m, Vector4fc v) {
+        return m.transform(v, new Vector4f());
+    }
+
+    public static Vector4fc transform(Matrix4fc m, Vector3fc v, float w) {
+        return m.transform(new Vector4f(v, w));
+    }
+
+    public static Matrix4f rotateX(Matrix4fc m, float angle) {
+        return new Matrix4f(m).rotateX(angle);
+    }
+
+    public static Matrix4f rotateY(Matrix4fc m, float angle) {
+        return new Matrix4f(m).rotateY(angle);
+    }
+
+    public static Matrix4f rotateZ(Matrix4fc m, float angle) {
+        return new Matrix4f(m).rotateZ(angle);
+    }
+
     public static Vector3f add(Vector3fc a, Vector3f b) {
         return new Vector3f(a).add(b);
     }

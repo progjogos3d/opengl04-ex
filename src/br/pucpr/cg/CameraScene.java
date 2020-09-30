@@ -13,7 +13,7 @@ public class CameraScene implements Scene {
     private Keyboard keys = Keyboard.getInstance();
 
     private Shader shader;
-    private Mesh mesh;
+    private Robot robot;
 
     private FPSCamera camera = new FPSCamera();
     private final float CAMERA_WALK_SPEED = 7f;
@@ -27,8 +27,8 @@ public class CameraScene implements Scene {
         glEnable(GL_CULL_FACE);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         shader = Shader.loadProgram("basic");
-        mesh = new MeshFactory(shader).createCube();
-        camera.getPosition().set(0.0f, 0.0f, 2.0f);
+        robot = new Robot(new MeshFactory(shader).createCube());
+        camera.getPosition().set(0.0f, 0.0f, 5.0f);
     }
 
     @Override
@@ -61,6 +61,7 @@ public class CameraScene implements Scene {
         }
 
         angle += Math.toRadians(10) * secs;
+        robot.update(secs);
     }
 
     @Override
@@ -72,8 +73,7 @@ public class CameraScene implements Scene {
         shader.unbind();
 
         //Como a camera está elevada, não precisamos mais girar o cubo no eixo x.
-        mesh.setUniform("uWorld", new Matrix4f().rotateY(angle));
-        mesh.draw(shader);
+        robot.draw(shader);
     }
 
     @Override
