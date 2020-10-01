@@ -12,35 +12,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import static br.pucpr.mage.MathUtil.*;
 
 public class Robot {
-    private static final Keyboard keys = Keyboard.getInstance();
-    private Mesh mesh;
-    private Limb arm;
-
-    public Robot(Mesh mesh) {
-        this.mesh = mesh;
-
-        var translation = new Vector3f(0.0f, 0.35f, 0.0f);
-        var scale = new Vector3f(0.15f, 0.8f, 0.15f);
-        var pivot = new Vector3f(0.0f, 0.3f, 0.0f);
-
-        this.arm = new Limb(GLFW_KEY_Q, GLFW_KEY_E, new Vector3f(0.6f, 0.48f, 0.0f), scale, pivot);
-        var forearm = new Limb(GLFW_KEY_A, GLFW_KEY_D, translation, scale, pivot);
-        var hand = new Limb(GLFW_KEY_Z, GLFW_KEY_C, translation, scale, pivot);
-
-        arm.setNext(forearm);
-        forearm.setNext(hand);
-    }
-
-    public void update(float secs) {
-        arm.update(secs);
-    }
-
-    public void draw(Shader shader) {
-        var world = new Matrix4f();
-        mesh.setUniform("uWorld", world).draw(shader);
-        arm.draw(world, shader);
-    }
-
     private class Limb {
         private Limb next;
         private int key1, key2;
@@ -81,10 +52,39 @@ public class Robot {
 
             var world = mul(parent, transform);
             mesh.setUniform("uWorld", scale(world, scale))
-                .draw(shader);
+                    .draw(shader);
 
             if (next != null) next.draw(world, shader);
         }
+    }
+
+    private static final Keyboard keys = Keyboard.getInstance();
+    private Mesh mesh;
+    private Limb arm;
+
+    public Robot(Mesh mesh) {
+        this.mesh = mesh;
+
+        var translation = new Vector3f(0.0f, 0.35f, 0.0f);
+        var scale = new Vector3f(0.15f, 0.8f, 0.15f);
+        var pivot = new Vector3f(0.0f, 0.3f, 0.0f);
+
+        this.arm = new Limb(GLFW_KEY_Q, GLFW_KEY_E, new Vector3f(0.6f, 0.48f, 0.0f), scale, pivot);
+        var forearm = new Limb(GLFW_KEY_A, GLFW_KEY_D, translation, scale, pivot);
+        var hand = new Limb(GLFW_KEY_Z, GLFW_KEY_C, translation, scale, pivot);
+
+        arm.setNext(forearm);
+        forearm.setNext(hand);
+    }
+
+    public void update(float secs) {
+        arm.update(secs);
+    }
+
+    public void draw(Shader shader) {
+        var world = new Matrix4f();
+        mesh.setUniform("uWorld", world).draw(shader);
+        arm.draw(world, shader);
     }
 }
 

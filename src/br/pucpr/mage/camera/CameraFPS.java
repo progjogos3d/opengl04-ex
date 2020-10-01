@@ -4,7 +4,7 @@ import org.joml.Vector3f;
 
 import static br.pucpr.mage.MathUtil.*;
 
-public class FPSCamera extends Camera {
+public class CameraFPS extends Camera {
     private float angleY = 0;
 
     public Vector3f getDirection() {
@@ -16,26 +16,26 @@ public class FPSCamera extends Camera {
         return add(getPosition(), getDirection());
     }
 
-    public FPSCamera setAngleY(float angle) {
+    public CameraFPS setAngleY(float angle) {
         this.angleY = angle;
         return this;
     }
 
-    public FPSCamera turn(float angle, float speed) {
-        this.angleY += angle * speed;
+    public CameraFPS turn(float angle, float secs) {
+        this.angleY += angle * secs;
         return this;
     }
 
-    public FPSCamera move(float speed, float time) {
-        var displacement = mul(getDirection(), speed * time);
+    public CameraFPS move(float speed, float secs) {
+        var displacement = mul(getDirection(), speed * secs);
         getPosition().add(displacement);
         return this;
     }
 
-    public FPSCamera strafe(float speed, float time) {
+    public CameraFPS strafe(float speed, float secs) {
         var strafe =
-                cross(getDirection(), getUp())
-                .mul(speed * time);
+                cross(getUp(), getDirection())
+                .mul(speed * secs);
         getPosition().add(strafe);
         return this;
 

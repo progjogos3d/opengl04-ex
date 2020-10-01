@@ -5,9 +5,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import br.pucpr.mage.*;
-import br.pucpr.mage.camera.Camera;
-import br.pucpr.mage.camera.FPSCamera;
-import org.joml.Matrix4f;
+import br.pucpr.mage.camera.CameraFPS;
 
 public class CameraScene implements Scene {
     private Keyboard keys = Keyboard.getInstance();
@@ -15,11 +13,9 @@ public class CameraScene implements Scene {
     private Shader shader;
     private Robot robot;
 
-    private FPSCamera camera = new FPSCamera();
-    private final float CAMERA_WALK_SPEED = 7f;
-    private final float CAMERA_TURN_SPEED = -toRadians(120f);
-
-    private float angle;
+    private CameraFPS camera = new CameraFPS();
+    private final float WALK_SPEED = 7f;
+    private final float TURN_SPEED = toRadians(120f);
 
     @Override
     public void init() {
@@ -41,26 +37,25 @@ public class CameraScene implements Scene {
         var strafe = keys.isDown(GLFW_KEY_LEFT_SHIFT);
 
         if (keys.isDown(GLFW_KEY_UP)) {
-            camera.move(CAMERA_WALK_SPEED, secs);
+            camera.move(WALK_SPEED, secs);
         } else if (keys.isDown(GLFW_KEY_DOWN)) {
-            camera.move(-CAMERA_WALK_SPEED, secs);
+            camera.move(-WALK_SPEED, secs);
         }
 
         if (strafe) {
-            if (keys.isDown(GLFW_KEY_RIGHT)) {
-                camera.strafe(CAMERA_WALK_SPEED, secs);
-            } else if (keys.isDown(GLFW_KEY_LEFT)) {
-                camera.strafe(-CAMERA_WALK_SPEED, secs);
+            if (keys.isDown(GLFW_KEY_LEFT)) {
+                camera.strafe(WALK_SPEED, secs);
+            } else if (keys.isDown(GLFW_KEY_RIGHT)) {
+                camera.strafe(-WALK_SPEED, secs);
             }
         } else {
-            if (keys.isDown(GLFW_KEY_RIGHT)) {
-                camera.turn(CAMERA_TURN_SPEED, secs);
-            } else if (keys.isDown(GLFW_KEY_LEFT)) {
-                camera.turn(-CAMERA_TURN_SPEED, secs);
+            if (keys.isDown(GLFW_KEY_LEFT)) {
+                camera.turn(TURN_SPEED, secs);
+            } else if (keys.isDown(GLFW_KEY_RIGHT)) {
+                camera.turn(-TURN_SPEED, secs);
             }
         }
 
-        angle += Math.toRadians(10) * secs;
         robot.update(secs);
     }
 
